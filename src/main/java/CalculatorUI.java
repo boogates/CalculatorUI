@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 public class CalculatorUI extends JFrame implements ActionListener {
 
     Calculator theCalculator = new Calculator();
-    JLabel displayLabel;
+    JLabel numberLabel;
+    JLabel symbolLabel;
+    JLabel memoryLabel;
 
     public CalculatorUI() {
         super("Calculator with Swing UI");
@@ -21,15 +23,24 @@ public class CalculatorUI extends JFrame implements ActionListener {
         panel.setLayout(gridBagLayout);
         setContentPane(panel);
 
-        displayLabel = new JLabel("0");
-        var displayLabelConstraints = new GridBagConstraints(0, 0, 4, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0);
-        panel.add(displayLabel, displayLabelConstraints);
+        numberLabel = new JLabel("0");
+        var numberLabelConstraints = new GridBagConstraints(0, 0, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0);
+        panel.add(numberLabel, numberLabelConstraints);
+
+        symbolLabel = new JLabel("");
+        var symbolLabelConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0);
+        panel.add(symbolLabel, symbolLabelConstraints);
+
+        memoryLabel = new JLabel("");
+        var memoryLabelConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0);
+        panel.add(memoryLabel, memoryLabelConstraints);
+
 
         JButton button0 = new JButton("0");
         var button0constraints = new GridBagConstraints(1, 5, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         button0.addActionListener(e -> {
             theCalculator.appendToMainNumber("0");
-            displayLabel.setText(theCalculator.getMainNumber());
+            numberLabel.setText(theCalculator.getMainNumber());
         });
         panel.add(button0, button0constraints);
 
@@ -39,7 +50,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("1");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button1, button1constraints);
@@ -50,7 +61,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("2");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button2, button2constraints);
@@ -61,7 +72,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("3");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button3, button3constraints);
@@ -72,7 +83,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("4");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button4, button4constraints);
@@ -83,7 +94,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("5");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button5, button5constraints);
@@ -94,7 +105,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("6");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button6, button6constraints);
@@ -105,7 +116,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("7");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button7, button7constraints);
@@ -116,7 +127,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("8");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button8, button8constraints);
@@ -127,31 +138,62 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.appendToMainNumber("9");
-                displayLabel.setText(theCalculator.getMainNumber());
+                numberLabel.setText(theCalculator.getMainNumber());
             }
         });
         panel.add(button9, button9constraints);
 
 
-        JButton minusButton = new JButton("-");
-        var minusButtonConstraints = new GridBagConstraints(3, 4, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        minusButton.addActionListener(this);
-        panel.add(minusButton, minusButtonConstraints);
 
         JButton plusButton = new JButton("+");
         var plusButtonConstraints = new GridBagConstraints(3, 5, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        plusButton.addActionListener(this);
+        plusButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCalculator.appendToSymbol("+");
+                symbolLabel.setText(theCalculator.getSymbol());
+                theCalculator.storeAndResetMainNumber();
+            }
+        });
         panel.add(plusButton, plusButtonConstraints);
+
+        JButton minusButton = new JButton("-");
+        var minusButtonConstraints = new GridBagConstraints(3, 4, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        minusButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCalculator.appendToSymbol("-");
+                symbolLabel.setText(theCalculator.getSymbol());
+                theCalculator.storeAndResetMainNumber();
+            }
+        });
+        panel.add(minusButton, minusButtonConstraints);
 
         JButton multiplyButton = new JButton("x");
         var multiplyButtonConstraints = new GridBagConstraints(3, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        multiplyButton.addActionListener(this);
+        multiplyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCalculator.appendToSymbol("x");
+                symbolLabel.setText(theCalculator.getSymbol());
+                theCalculator.storeAndResetMainNumber();
+            }
+        });
         panel.add(multiplyButton, multiplyButtonConstraints);
 
         JButton divideButton = new JButton("/");
         var divideButtonConstraints = new GridBagConstraints(3, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
-        divideButton.addActionListener(this);
+        divideButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCalculator.appendToSymbol("/");
+                symbolLabel.setText(theCalculator.getSymbol());
+                theCalculator.storeAndResetMainNumber();
+            }
+        });
         panel.add(divideButton, divideButtonConstraints);
+
+
 
         JButton equalButton = new JButton("=");
         var equalButtonConstraints = new GridBagConstraints(2, 5, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
@@ -162,6 +204,52 @@ public class CalculatorUI extends JFrame implements ActionListener {
         var clearButtonConstraints = new GridBagConstraints(0, 5, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
         clearButton.addActionListener(this);
         panel.add(clearButton, clearButtonConstraints);
+
+
+
+        JButton mcButton = new JButton("MC");
+        var mcButtonConstraints = new GridBagConstraints(0, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        mcButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCalculator.resetMemory();
+                memoryLabel.setText(theCalculator.getMemory());
+            }
+        });
+        panel.add(mcButton, mcButtonConstraints);
+
+        JButton mrButton = new JButton("MR");
+        var mrButtonConstraints = new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        mrButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCalculator.storeMemoryNumber();
+                memoryLabel.setText(theCalculator.getMemory());
+            }
+        });
+        panel.add(mrButton, mrButtonConstraints);
+
+        JButton mAddButton = new JButton("M+");
+        var mAddButtonConstraints = new GridBagConstraints(2, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        mAddButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCalculator.memoryAdd(numberLabel.getText());
+                memoryLabel.setText(theCalculator.getMemory());
+            }
+        });
+        panel.add(mAddButton, mAddButtonConstraints);
+
+        JButton mSubButton = new JButton("M-");
+        var mSubButtonConstraints = new GridBagConstraints(3, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(1, 1, 1, 1), 0, 0);
+        mSubButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theCalculator.memorySub(numberLabel.getText());
+                memoryLabel.setText(theCalculator.getMemory());
+            }
+        });
+        panel.add(mSubButton, mSubButtonConstraints);
 
         setPreferredSize(new Dimension(400, 600));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -176,32 +264,35 @@ public class CalculatorUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (((JButton) e.getSource()).getText().equals("=")) {
-            theCalculator.show(displayLabel.getText());
-            displayLabel.setText(theCalculator.getMainNumber());
+            if (symbolLabel.getText().equals("+")){
+                theCalculator.add(numberLabel.getText());
+                numberLabel.setText(theCalculator.getMainNumber());
+            }
+            else if (symbolLabel.getText().equals("-")){
+                theCalculator.sub(numberLabel.getText());
+                numberLabel.setText(theCalculator.getMainNumber());
+            }
+            else if (symbolLabel.getText().equals("x")){
+                theCalculator.mult(numberLabel.getText());
+                numberLabel.setText(theCalculator.getMainNumber());
+            }
+            else if (symbolLabel.getText().equals("/")){
+                theCalculator.div(numberLabel.getText());
+                numberLabel.setText(theCalculator.getMainNumber());
+            }
+            theCalculator.resetSymbol();
+            symbolLabel.setText(theCalculator.getSymbol());
         }
-        else if (((JButton) e.getSource()).getText().equals("+")){
-            theCalculator.storeAndResetMainNumber();
-            theCalculator.add(displayLabel.getText());
-            displayLabel.setText(theCalculator.getMainNumber());
-        }
-        else if (((JButton) e.getSource()).getText().equals("-")){
-            theCalculator.storeAndResetMainNumber();
-            theCalculator.sub(displayLabel.getText());
-            displayLabel.setText(theCalculator.getMainNumber());
-        }
-        else if (((JButton) e.getSource()).getText().equals("x")){
-            theCalculator.storeAndResetMainNumber();
-            theCalculator.mult(displayLabel.getText());
-            displayLabel.setText(theCalculator.getMainNumber());
-        }
-        else if (((JButton) e.getSource()).getText().equals("/")){
-            theCalculator.storeAndResetMainNumber();
-            theCalculator.div(displayLabel.getText());
-            displayLabel.setText(theCalculator.getMainNumber());
-        }
+
         else if (((JButton) e.getSource()).getText().equals("C")){
             theCalculator.resetMainNumber();
-            displayLabel.setText(theCalculator.getMainNumber());
+            theCalculator.resetSymbol();
+            numberLabel.setText(theCalculator.getMainNumber());
+            symbolLabel.setText(theCalculator.getSymbol());
+        }
+        else {
+            numberLabel.setText(theCalculator.getMainNumber());
+            symbolLabel.setText(theCalculator.getSymbol());
         }
     }
 }

@@ -3,6 +3,8 @@ public class Calculator {
 
     String mainNumber= "0";
     String previousNumber;
+    String symbol;
+    String memory;
 
     public Calculator() {
         this("");
@@ -13,22 +15,39 @@ public class Calculator {
     }
 
     public String appendToMainNumber(String toAppend) {
-        mainNumber += toAppend;
+        mainNumber = toAppend;
         return mainNumber;
+    }
+
+    public String appendToSymbol(String toAppend) {
+        symbol = toAppend;
+        return symbol;
     }
 
     public void resetMainNumber() {
         mainNumber = "0";
     }
 
+    public void resetSymbol() {
+        symbol = " ";
+    }
+
+    public void resetMemory(){
+        memory = "0";
+    }
+
     public String getMainNumber() {
         return mainNumber;
     }
 
-
-    public String show(String toShow) {
-        return mainNumber;
+    public String getSymbol(){
+        return symbol;
     }
+
+    public String getMemory(){
+        return memory;
+    }
+
 
     public String add(String toAdd) {
         var mainNumberInteger = Integer.parseInt(previousNumber);
@@ -62,8 +81,29 @@ public class Calculator {
         return mainNumber;
     }
 
+    public String memoryAdd(String toAdd) {
+        var mainNumberInteger = Integer.parseInt(memory);
+        var newNumberInteger = Integer.parseInt(toAdd);
+        var result = mainNumberInteger + newNumberInteger;
+        memory = Integer.toString(result);
+        return memory;
+    }
+
+    public String memorySub(String toSub) {
+        var mainNumberInteger = Integer.parseInt(memory);
+        var newNumberInteger = Integer.parseInt(toSub);
+        var result = mainNumberInteger - newNumberInteger;
+        memory = Integer.toString(result);
+        return memory;
+    }
+
     public void storeAndResetMainNumber() {
         previousNumber = mainNumber;
+        resetMainNumber();
+    }
+
+    public void storeMemoryNumber(){
+        memory = mainNumber;
         resetMainNumber();
     }
 }

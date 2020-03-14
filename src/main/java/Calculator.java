@@ -4,7 +4,7 @@ public class Calculator {
     String mainNumber= "0";
     String previousNumber;
     String symbol;
-    String memory;
+    String memory= "0";
 
     public Calculator() {
         this("");

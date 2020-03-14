@@ -9,7 +9,6 @@ public class CalculatorUI extends JFrame implements ActionListener {
     Calculator theCalculator = new Calculator();
     JLabel numberLabel;
     JLabel symbolLabel;
-    JLabel memoryLabel;
 
     public CalculatorUI() {
         super("Calculator with Swing UI");
@@ -28,12 +27,8 @@ public class CalculatorUI extends JFrame implements ActionListener {
         panel.add(numberLabel, numberLabelConstraints);
 
         symbolLabel = new JLabel("");
-        var symbolLabelConstraints = new GridBagConstraints(2, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0);
+        var symbolLabelConstraints = new GridBagConstraints(2, 0, 2, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0);
         panel.add(symbolLabel, symbolLabelConstraints);
-
-        memoryLabel = new JLabel("");
-        var memoryLabelConstraints = new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(20, 20, 20, 20), 0, 0);
-        panel.add(memoryLabel, memoryLabelConstraints);
 
 
         JButton button0 = new JButton("0");
@@ -213,7 +208,6 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.resetMemory();
-                memoryLabel.setText(theCalculator.getMemory());
             }
         });
         panel.add(mcButton, mcButtonConstraints);
@@ -223,8 +217,7 @@ public class CalculatorUI extends JFrame implements ActionListener {
         mrButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                theCalculator.storeMemoryNumber();
-                memoryLabel.setText(theCalculator.getMemory());
+                numberLabel.setText(theCalculator.getMemory());
             }
         });
         panel.add(mrButton, mrButtonConstraints);
@@ -235,7 +228,6 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.memoryAdd(numberLabel.getText());
-                memoryLabel.setText(theCalculator.getMemory());
             }
         });
         panel.add(mAddButton, mAddButtonConstraints);
@@ -246,7 +238,6 @@ public class CalculatorUI extends JFrame implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theCalculator.memorySub(numberLabel.getText());
-                memoryLabel.setText(theCalculator.getMemory());
             }
         });
         panel.add(mSubButton, mSubButtonConstraints);
